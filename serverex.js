@@ -1,29 +1,10 @@
+require("dotenv").config();
+
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
-
-let produtos = [
-  {
-    id: 1,
-    descricao: "Arroz parboilizado 5Kg",
-    valor: 25.0,
-    marca: "Tio João",
-  },
-  {
-    id: 2,
-    descricao: "Maionese 250gr",
-    valor: 7.2,
-    marca: "Helmans",
-  },
-  { id: 3, descricao: "Iogurte Natural 200ml", valor: 2.5, marca: "Itambé" },
-  {
-    id: 4,
-    descricao: "Batata Maior Palha 300gr",
-    valor: 15.2,
-    marca: "Chipps",
-  },
-  { id: 5, descricao: "Nescau 400gr", valor: 8.0, marca: "Nestlé" },
-];
+const knexConfig = require("./knexfile")[process.env.NODE_ENV || "development"];
+const knex = require("knex")(knexConfig);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -31,64 +12,109 @@ app.set("view engine", "");
 
 app.use(morgan("common"));
 
-app.use("/site", express.static("public", { extensions: ["html", "htm"] }));
-
 app.get("/", (req, res) => {
-  res.send(`Hello to API World<br>
-        <a href="/api/produtos">API de Produtos</a>`);
+  res.send(`Treinos da semana<br>
+        <a href="/api/training">API de Treinos</a>`);
 });
 
-app.get("/api/produtos", (req, res) => {
-  let sort = req.query.sort;
-  if (sort) {
-    produtosOrdenados = produtos.sort((a, b) => a[sort].localeCompare(b[sort]));
-    res.status(200).json(produtosOrdenados);
-  } else res.status(200).json(produtos);
+app.get("/api/trainings", (req, res) => {
+  knex("trainings")
+    .select("id", "description", "type", "day", "load", "series", "interval")
+    .then((data) => res.status(200).json(data))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: `Erro ao recuperar lista de produtos: ${err.message}`,
+      });
+    });
 });
 
-app.get("/api/produtos/:id", (req, res) => {
-  let id = parseInt(req.params.id);
-  let produto = produtos.find((p) => p.id === id);
-  res.status(200).json(produto);
+app.get("/api/trainings/:id", (req, res) => {
+  knex("trainings")
+    .select("id", "description", "type", "day", "load", "series", "interval")
+    .then((trainings) => {
+      let id = parseInt(req.params.id);
+      let training = trainings.find((p) => p.id === id);
+      res.status(200).json(training);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: `Erro ao recuperar produto: ${err.message}`,
+      });
+    });
 });
 
-app.post("/api/produtos", express.json(), (req, res) => {
-  const novoProduto = req.body;
-  console.log(novoProduto);
-  novoProduto.id = produtos.length + 1;
-  produtos.push(novoProduto);
-  res.status(201).json({
-    mensagem: "Produto adicionado com sucesso.",
-    produto: novoProduto,
-  });
+app.post("/api/trainings", express.json(), (req, res) => {
+  const newTraining = req.body;
+
+  knex("trainings")
+    .insert(newTraining)
+    .returning([
+      "id",
+      "description",
+      "type",
+      "day",
+      "load",
+      "series",
+      "interval",
+    ])
+    .then((insertedTraining) => {
+      res.status(201).json({
+        mensagem: "Treino adicionado com sucesso.",
+        treino: insertedTraining[0],
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: `Erro ao adicionar treino: ${err.message}`,
+      });
+    });
 });
 
-app.put("/api/produtos/:id", (req, res) => {
+app.put("/api/trainings/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const produtoIndex = produtos.findIndex((p) => p.id === id);
 
-  if (produtoIndex !== -1) {
-    const produtoAtualizado = req.body;
-    produtos[produtoIndex] = {
-      ...produtos[produtoIndex],
-      ...produtoAtualizado,
-    };
-    res.status(200).json(produtos[produtoIndex]);
-  } else {
-    res.status(404).json({ mensagem: "Produto não encontrado" });
-  }
+  knex("trainings")
+    .where({ id: id })
+    .update(req.body)
+    .returning("*")
+    .then((updatedTraining) => {
+      if (updatedTraining.length > 0) {
+        res.status(200).json(updatedTraining[0]);
+      } else {
+        res.status(404).json({ mensagem: "Treino não encontrado" });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: `Erro ao atualizar treino: ${err.message}`,
+      });
+    });
 });
 
-app.delete("/api/produtos/:id", (req, res) => {
+app.delete("/api/trainings/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const produtoIndex = produtos.findIndex((p) => p.id === id);
 
-  if (produtoIndex !== -1) {
-    const produtoExcluido = produtos.splice(produtoIndex, 1);
-    res.status(200).json(produtoExcluido[0]);
-  } else {
-    res.status(404).json({ mensagem: "Produto não encontrado" });
-  }
+  knex("trainings")
+    .where({ id: id })
+    .del()
+    .returning("*")
+    .then((deletedTrainings) => {
+      if (deletedTrainings > 0) {
+        res.status(200).json({ mensagem: "Treino excluído com sucesso" });
+      } else {
+        res.status(404).json({ mensagem: "Treino não encontrado" });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: `Erro ao excluir treino: ${err.message}`,
+      });
+    });
 });
 
 app.use((req, res) => {
