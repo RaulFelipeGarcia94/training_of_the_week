@@ -14,7 +14,7 @@ app.use(morgan("common"));
 
 app.get("/", (req, res) => {
   res.send(`Treinos da semana<br>
-        <a href="/api/training">API de Treinos</a>`);
+        <a href="/api/trainings">API de Treinos</a>`);
 });
 
 app.get("/api/trainings", (req, res) => {
