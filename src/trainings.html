@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/dist/output.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Oleo+Script&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      const token = localStorage.getItem("token");
+      fetch("http://localhost:3000/api/trainings", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Erro ao realizar a requisição.");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          const container = document.getElementById("list-trainings");
+
+          container.innerHTML = "";
+
+          data.forEach((treino) => {
+            const li = document.createElement("li");
+            li.className = "bg-gray-100 rounded p-4 mb-4 shadow";
+
+            const h2 = document.createElement("h2");
+            h2.className = "text-xl font-semibold mb-2";
+            h2.textContent = treino.day;
+
+            const p = document.createElement("p");
+            p.className = "text-sm";
+            p.appendChild(document.createTextNode(`Tipo: ${treino.type}`));
+            p.appendChild(document.createElement("br"));
+            p.appendChild(
+              document.createTextNode(`Descrição: ${treino.description}`)
+            );
+            p.appendChild(document.createElement("br"));
+            p.appendChild(document.createTextNode(`Carga: ${treino.load}`));
+            p.appendChild(document.createElement("br"));
+            p.appendChild(document.createTextNode(`Séries: ${treino.series}`));
+            p.appendChild(document.createElement("br"));
+            p.appendChild(
+              document.createTextNode(`Intervalo: ${treino.interval}`)
+            );
+
+            li.appendChild(h2);
+            li.appendChild(p);
+            container.appendChild(li);
+          });
+        })
+        .catch((error) => {
+          console.error("Houve um erro:", error);
+        });
+    </script>
+    <title>Treinos da semana</title>
+  </head>
+  <body class="bg-gray-700">
+    <header>
+      <div class="flex justify-between items-center p-4 bg-lime-300">
+        <img src="./images/logo.png" alt="" width="80px" height="80px" />
+      </div>
+    </header>
+    <main>
+      <section class="p-5">
+        <div class="bg-white p-6 rounded shadow-md">
+          <h1 class="text-4xl p-4 text-center">Treinos da Semana</h1>
+          <ul id="list-trainings" class="flex"></ul>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
