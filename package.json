@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "type": "commonjs",
-  "main": "src/serverex.js",
+  "main": "./src/serverex.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
     "build": "npx tailwindcss -i ./src/input.css -o ./dist/output.css"
   },
   "author": "Raul Garcia",

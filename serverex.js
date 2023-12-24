@@ -15,7 +15,7 @@ app.set("view engine", "");
 
 app.use(morgan("common"));
 
-// app.use(cors());
+app.use(cors());
 
 app.use(express.static(path.join(__dirname, "src")));
 
