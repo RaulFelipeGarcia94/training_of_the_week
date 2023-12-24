@@ -5,7 +5,7 @@ const express = require("express");
 const path = require("path");
 const morgan = require("morgan");
 const app = express();
-const knexConfig = require("./knexfile")[process.env.NODE_ENV || "development"];
+const knexConfig = require("./knexfile")["development"];
 const knex = require("knex")(knexConfig);
 const jwt = require("jsonwebtoken");
 
