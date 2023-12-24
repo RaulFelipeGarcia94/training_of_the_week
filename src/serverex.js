@@ -2,6 +2,7 @@ require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const cors = require("cors");
 const express = require("express");
+const path = require("path");
 const morgan = require("morgan");
 const app = express();
 const knexConfig =
