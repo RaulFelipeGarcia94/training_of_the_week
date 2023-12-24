@@ -29,7 +29,7 @@
 
           data.forEach((treino) => {
             const li = document.createElement("li");
-            li.className = "bg-gray-100 rounded p-4 mb-4 shadow";
+            li.className = "bg-gray-100 rounded p-4 m-4 shadow";
 
             const h2 = document.createElement("h2");
             h2.className = "text-xl font-semibold mb-2";
@@ -68,11 +68,18 @@
         <img src="./images/logo.png" alt="" width="80px" height="80px" />
       </div>
     </header>
-    <main>
+    <main
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      "
+    >
       <section class="p-5">
         <div class="bg-white p-6 rounded shadow-md">
           <h1 class="text-4xl p-4 text-center">Treinos da Semana</h1>
-          <ul id="list-trainings" class="flex"></ul>
+          <ul id="list-trainings" class="grid grid-cols-2"></ul>
         </div>
       </section>
     </main>

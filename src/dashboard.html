@@ -16,21 +16,20 @@
       <div class="flex justify-between items-center p-4 bg-lime-300">
         <img src="./images/logo.png" alt="" width="80px" height="80px" />
       </div>
-
-      <div
-        id="mobile-menu"
-        class="hidden lg:hidden bg-gray-800 text-white z-10 absolute w-full"
-      >
-        <a href="/trainings.html" class="block py-2 px-4 hover:bg-gray-700"
-          >Lista de treino</a
-        >
-      </div>
     </header>
-    <main>
-      <section class="p-5">
+    <main
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+    <div style="max-width: 950px">
+      <section class="p-5" >
         <div class="bg-white p-6 rounded shadow-md">
           <h1 class="text-4xl p-4 text-center">Treinos da Semana</h1>
-          <ul id="list-trainings" class="flex"></ul>
+          <ul id="list-trainings" class="grid grid-cols-2"></ul>
         </div>
       </section>
       <section class="p-5">
@@ -40,7 +39,7 @@
           onsubmit="cadastreTraining(event)"
         >
           <div class="grid grid-cols-2">
-            <div class="mb-4">
+            <div class="mb-4 px-4">
               <label
                 for="description"
                 class="block text-gray-700 text-sm font-bold mb-2"
@@ -54,7 +53,7 @@
                 placeholder="Digite a descrição do treino"
               />
             </div>
-            <div class="mb-4">
+            <div class="mb-4 px-4">
               <label
                 for="type"
                 class="block text-gray-700 text-sm font-bold mb-2"
@@ -68,7 +67,7 @@
                 placeholder="Digite o tipo de treino"
               />
             </div>
-            <div class="mb-4">
+            <div class="mb-4 px-4">
               <label
                 for="day"
                 class="block text-gray-700 text-sm font-bold mb-2"
@@ -82,7 +81,7 @@
                 placeholder="Digite o dia da semana"
               />
             </div>
-            <div class="mb-4">
+            <div class="mb-4 px-4">
               <label
                 for="load"
                 class="block text-gray-700 text-sm font-bold mb-2"
@@ -96,7 +95,7 @@
                 placeholder="Digite a carga do treino"
               />
             </div>
-            <div class="mb-4">
+            <div class="mb-4 px-4">
               <label
                 for="series"
                 class="block text-gray-700 text-sm font-bold mb-2"
@@ -110,7 +109,7 @@
                 placeholder="Digite a série do treino"
               />
             </div>
-            <div class="mb-4">
+            <div class="mb-4 px-4">
               <label
                 for="interval"
                 class="block text-gray-700 text-sm font-bold mb-2"
@@ -359,6 +358,7 @@
         </div>
       </div>
     </main>
+    </div>
   </body>
 </html>
 
@@ -383,7 +383,7 @@
 
       data.forEach((treino) => {
         const li = document.createElement("li");
-        li.className = "bg-gray-100 rounded p-4 mb-4 shadow";
+        li.className = "bg-gray-100 rounded p-4 m-4 shadow";
 
         const p = document.createElement("p");
         p.className = "text-sm";
