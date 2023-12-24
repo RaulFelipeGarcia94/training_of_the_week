@@ -53,14 +53,17 @@ function handleEditModal(training) {
         interval: interval,
       };
 
-      const resposta = await fetch(`${apiUrl}/api/trainings/${training.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(trainingData),
-      });
+      const resposta = await fetch(
+        `http://localhost:3000/api/trainings/${training.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(trainingData),
+        }
+      );
       if (resposta.status === 200) {
         alert("Treino editado com sucesso!");
       } else {
@@ -95,7 +98,6 @@ function parseJwt(token) {
 //Função para cadastrar usuário no banco
 async function registerUser(e) {
   e.preventDefault();
-  const apiUrl = process.env.API_URL;
   try {
     const nome = document.getElementById("nome").value;
     const email = document.getElementById("email").value;
@@ -109,7 +111,7 @@ async function registerUser(e) {
       password: senha,
       roles: "USER",
     };
-    const resposta = await fetch(`${apiUrl}/api/register`, {
+    const resposta = await fetch("http://localhost:3000/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -138,7 +140,7 @@ async function loginUser(e) {
       password: senha,
     };
 
-    const resposta = await fetch(`${apiUrl}/api/login`, {
+    const resposta = await fetch("http://localhost:3000/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -188,7 +190,7 @@ async function cadastreTraining(e) {
       series: series,
       interval: interval,
     };
-    const resposta = await fetch(`${apiUrl}/api/trainings`, {
+    const resposta = await fetch("http://localhost:3000/api/trainings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -210,13 +212,16 @@ async function cadastreTraining(e) {
 async function deleteTraining(idTraining) {
   try {
     const token = localStorage.getItem("token");
-    const resposta = await fetch(`${apiUrl}/api/trainings/${idTraining}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const resposta = await fetch(
+      `http://localhost:3000/api/trainings/${idTraining}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (resposta.status === 200) {
       alert("Treino excluído com sucesso!");
