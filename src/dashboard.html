@@ -364,7 +364,7 @@
 
 <script>
   const token = localStorage.getItem("token");
-  fetch("http://localhost:3000/api/trainings", {
+  fetch("https://training-of-the-week.onrender.com/api/trainings", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
