@@ -4,7 +4,8 @@ const cors = require("cors");
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
-const knexConfig = require("./knexfile")[process.env.NODE_ENV || "development"];
+const knexConfig =
+  require("../knexfile")[process.env.NODE_ENV || "development"];
 const knex = require("knex")(knexConfig);
 const jwt = require("jsonwebtoken");
 
