@@ -153,6 +153,7 @@ async function loginUser(e) {
         body: JSON.stringify(dadosUsuario),
       }
     );
+    console.log(resposta);
     if (resposta.status === 200) {
       const data = await resposta.json();
       if (data.token) {
