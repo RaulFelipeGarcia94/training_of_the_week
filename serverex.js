@@ -23,6 +23,16 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "src", "index.html"));
 });
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 const checkToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   if (authHeader) {
