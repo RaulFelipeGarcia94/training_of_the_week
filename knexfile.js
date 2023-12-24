@@ -19,15 +19,9 @@ module.exports = {
   },
 
   production: {
-    client: "pg",
+    client: "sqlite3",
     connection: {
-      database: "postgres",
-      user: "postgres",
-      password: "root",
-    },
-    pool: {
-      min: 2,
-      max: 10,
+      filename: "./db/db.sqlite3",
     },
     migrations: {
       directory: "./db/migrations",
