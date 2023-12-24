@@ -10,7 +10,7 @@
   },
   "author": "Raul Garcia",
   "engines": {
-    "node": "20.10.0"
+    "node": "18.18.2"
   },
   "license": "ISC",
   "dependencies": {
@@ -24,9 +24,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1",
     "pg": "^8.11.3",
-    "sqlite3": "^5.1.6"
-  },
-  "devDependencies": {
-    "tailwindcss": "^3.3.6"
+    "sqlite3": "^5.1.6",
+    "tailwindcss": "^3.4.0"
   }
 }
