@@ -17,6 +17,8 @@ app.use(morgan("common"));
 
 app.use(cors());
 
+app.use(express.static("src"));
+
 const checkToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   if (authHeader) {
