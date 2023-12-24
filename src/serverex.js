@@ -17,7 +17,7 @@ app.use(morgan("common"));
 
 app.use(cors());
 
-app.use(express.static("src"));
+app.use(express.static(path.join(__dirname, "src")));
 
 const checkToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
