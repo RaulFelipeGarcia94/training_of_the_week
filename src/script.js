@@ -54,7 +54,7 @@ function handleEditModal(training) {
       };
 
       const resposta = await fetch(
-        `http://localhost:3000/api/trainings/${training.id}`,
+        `https://training-of-the-week.onrender.com/api/trainings/${training.id}`,
         {
           method: "PUT",
           headers: {
@@ -111,13 +111,16 @@ async function registerUser(e) {
       password: senha,
       roles: "USER",
     };
-    const resposta = await fetch("http://localhost:3000/api/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dadosUsuario),
-    });
+    const resposta = await fetch(
+      "https://training-of-the-week.onrender.com/api/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dadosUsuario),
+      }
+    );
     if (resposta.status === 201) {
       window.location.replace("/src/login.html");
     } else {
@@ -140,13 +143,16 @@ async function loginUser(e) {
       password: senha,
     };
 
-    const resposta = await fetch("http://localhost:3000/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dadosUsuario),
-    });
+    const resposta = await fetch(
+      "https://training-of-the-week.onrender.com/api/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dadosUsuario),
+      }
+    );
 
     if (resposta.status === 200) {
       const data = await resposta.json();
@@ -190,14 +196,17 @@ async function cadastreTraining(e) {
       series: series,
       interval: interval,
     };
-    const resposta = await fetch("http://localhost:3000/api/trainings", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(trainingData),
-    });
+    const resposta = await fetch(
+      "https://training-of-the-week.onrender.com/api/trainings",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(trainingData),
+      }
+    );
     if (resposta.status === 201) {
       alert("Cadastro feito com sucesso!");
     } else {
@@ -213,7 +222,7 @@ async function deleteTraining(idTraining) {
   try {
     const token = localStorage.getItem("token");
     const resposta = await fetch(
-      `http://localhost:3000/api/trainings/${idTraining}`,
+      `https://training-of-the-week.onrender.com/api/trainings/${idTraining}`,
       {
         method: "DELETE",
         headers: {
