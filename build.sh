@@ -1,4 +1,4 @@
 #!/bin/bash
 npm install
 npm install -g nodemon
-npx tailwindcss build src/input.css -o src/output.css
+npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
