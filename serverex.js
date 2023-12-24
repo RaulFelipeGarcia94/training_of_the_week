@@ -86,6 +86,7 @@ app.post("/api/register", (req, res) => {
 });
 
 app.post("/api/login", (req, res) => {
+  console.log(req);
   let { login, password } = req.body;
   knex("users")
     .where({ login: login })
