@@ -19,9 +19,15 @@ module.exports = {
   },
 
   production: {
-    client: "sqlite3",
+    client: "pg",
     connection: {
-      filename: "./db/db.sqlite3",
+      database: "postgres",
+      user: "postgres",
+      password: "Senha123",
+    },
+    pool: {
+      min: 2,
+      max: 10,
     },
     migrations: {
       directory: "./db/migrations",
@@ -29,6 +35,5 @@ module.exports = {
     seeds: {
       directory: "./db/seeds",
     },
-    useNullAsDefault: true,
   },
 };
