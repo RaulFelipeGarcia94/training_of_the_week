@@ -159,9 +159,9 @@ async function loginUser(e) {
         localStorage.setItem("token", data.token);
         const decodedToken = parseJwt(data.token);
         if (decodedToken.roles.includes("ADMIN")) {
-          window.location.replace("/src/dashboard.html");
+          window.location.replace("dashboard.html");
         } else {
-          window.location.replace("/src/trainings.html");
+          window.location.replace("trainings.html");
         }
       } else {
         handleErrorModal();
