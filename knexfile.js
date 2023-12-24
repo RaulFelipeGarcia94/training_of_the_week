@@ -19,21 +19,18 @@ module.exports = {
   },
 
   production: {
-    client: "pg",
+    client: "postgresql",
     connection: {
-      database: "postgres",
-      user: "postgres",
-      password: "Senha123",
+      database: "my_db",
+      user: "username",
+      password: "password",
     },
     pool: {
       min: 2,
       max: 10,
     },
     migrations: {
-      directory: "./db/migrations",
-    },
-    seeds: {
-      directory: "./db/seeds",
+      tableName: "knex_migrations",
     },
   },
 };
